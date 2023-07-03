@@ -40,7 +40,9 @@ class Parser:
             self. data_client_imp.insert(connection, item[0], item[1], item[2])
 
     def save_to_csv(self,mebel_items):
-        self.data_client_imp.create_mebel_table(mebel_items)       
+        self.data_client_imp.create_mebel_table(mebel_items) 
+        for item in mebel_items:
+            self. data_client_imp.insert(item[0], item[1], item[2])      
 
     def run(self):
         mebel_items = []

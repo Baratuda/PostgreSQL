@@ -1,5 +1,5 @@
 from csv import writer
-from data_client import DataClient
+from Clients.data_client import DataClient
 import pandas as pd
 
 
@@ -7,8 +7,8 @@ class CSVClient(DataClient):
     def get_connection(self):
         pass
 
-    def create_mebel_table(self, mebel_items):
-       pd.DataFrame(mebel_items,columns=['link','price','description']).to_csv('pandadata.csv', index = False)  
+    def create_mebel_table(self, mebel_items=None):
+       pd.DataFrame(columns=['link','price','description']).to_csv('pandadata.csv', index = False)  
 
     def get_items(self, conn=None, price_from=0, price_to=100000):
          data = pd.read_csv('pandadata.csv')
