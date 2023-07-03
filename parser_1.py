@@ -1,6 +1,7 @@
+
 import requests
 from bs4 import BeautifulSoup
-import data_client
+from Clients.CSV_client import  CSVClient 
 
 
 class Parser:
@@ -10,7 +11,7 @@ class Parser:
         'https://www.kufar.by/l/mebel?cursor=eyJ0IjoiYWJzIiwiZiI6dHJ1ZSwicCI6M30%3D',
         'https://www.kufar.by/l/mebel?cursor=eyJ0IjoiYWJzIiwiZiI6dHJ1ZSwicCI6NH0%3D'
     ]
-    data_client_imp = data_client.PostgresClient()
+    data_client_imp = CSVClient()
 
     @staticmethod
     def get_mebel_by_link(link):
@@ -38,11 +39,14 @@ class Parser:
         for item in mebel_items:
             self. data_client_imp.insert(connection, item[0], item[1], item[2])
 
+    def save_to_csv(self,mebel_items):
+        self.data_client_imp.create_mebel_table(mebel_items)       
+
     def run(self):
         mebel_items = []
         for link in Parser.links_to_parse:
             mebel_items.extend(self.get_mebel_by_link(link))
-        self.save_to_postgres(mebel_items)
+        self.save_to_csv(mebel_items)
 
 
 Parser().run()
